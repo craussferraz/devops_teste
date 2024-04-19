@@ -1,0 +1,4 @@
+---
+- name: Install Prometheus
+  become: true
+  script: scripts/install_prometheus.sh

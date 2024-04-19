@@ -1,64 +1,39 @@
-# Infra Challenge 20240202
+## Infra Challenge 20240202
 
-## Introdução
+Nesse desafio o objetivo é criar um servidor Ubuntu com Nginx na cloud AWS aplicando praticas de IaC e CI/DC.
 
-Este é um teste para que possamos ver as suas habilidades como DevOps.
+Para alcansar o objetivo foram feitas algumas considerações de pre-existencia para aplicar o projeto.
 
-Nesse teste você deverá configurar um servidor, aplicar os principais recursos de segurança e trabalhar com Infra as Code
+VPC - Considerando que já exista uma VPC previamente criada vou chama-la de "main_vpc" com range de ip "10.0.0.0/16"
 
-[SPOILER] As instruções de entrega e apresentação do challenge estão no final deste Readme (=
+Subnet - considerando uma subnet no range "10.0.1.0/24"
 
-### Antes de começar
- 
-- Considere como deadline da avaliação a partir do início do teste. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
+Internet Gateway
 
+Permissões AWS IAM
 
-## **Parte 1 - Configuração do Servidor**
+# Infraestrutura Como Código com Terraform e Ansible
 
-A sua tarefa consiste em configurar um servidor baseado na nuvem e instalar e configurar alguns componentes básicos.
+Este repositório contém o código necessário para provisionar uma infraestrutura na AWS usando Terraform e configurar servidores usando Ansible a travez do Github Actions.
 
+## Estrutura do Repositório
 
-1. Configurar grupo de segurança na AWS
-2. Configuração da redes para o Servidor
-3. Configurar um servidor AWS (recomenda-se o freetier) executando uma versão Ubuntu LTS.
-4. Instalar e configurar qualquer software que você recomendaria em uma configuração de servidor padrão sob as perspectivas de segurança, desempenho, backup e monitorização.
-5. Instalar e configurar o nginx para servir uma página web HTML estática.
+- **/terraform**: Contém todos os arquivos Terraform para provisionamento da infraestrutura, EC2 Ubuntu em uma instancia t3a.micro para produção, otimizando os custos.
+- **/ansible**: Contém os playbooks e roles do Ansible para configuração do servidor.
+- **/.github/workflows**: Contém os workflows do GitHub Actions para automação do Terraform e do Ansible.
 
+## Como usar isoladamente
 
+Para executar o Terraform:
+1. Navegue até a pasta `terraform`.
+2. Execute `terraform init` para inicializar o Terraform.
+3. Execute `terraform plan` e `terraform apply` para aplicar as mudanças.
 
-## **Part 2 – Infra as Code**
+Para executar o Ansible:
+1. Navegue até a pasta `ansible`.
+2. Execute `ansible-playbook -i hosts playbooks/site.yml` para configurar os servidores.
+Obs.: se faz necessario ajustar o arquivo hosts com o IP do servidor manualmente para esse teste isolado(Com o Github Action esse processo esta automatizado).
 
-Como diferencial, você poderá configurar toda a infra-estrutura com ferramentas como:
+## Segurança
 
-- Ansible
-- Terraform
-- AWS CDK ou CloudFormation
-
-Ao ter o projeto executando em um servidor e aplicando as melhores práticas de segurança com grupos de segurança e as configurações de rede criando completamente por código.
-
-
-## **Part 3 – Continuous Delivery**
-
-Desenhar e construir uma pipeline para apoiar a entrega contínua da aplicação de monitorização construída na Parte 2 no servidor configurado na Parte 1. Descrever a pipeline utilizando um diagrama de fluxo e explicar o objetivo e o processo de seleção usado em cada uma das ferramentas e técnicas específicas que compõem a sua pipeline. 
-
-## Readme do Repositório
-
-- Deve conter o título do projeto
-- Uma descrição sobre o projeto em frase
-- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:  
-
->  This is a challenge by [Coodesh](https://coodesh.com/)
-
-## Finalização e Instruções para a Apresentação
-
-1. Adicione o link do repositório com a sua solução no teste
-2. Verifique se o Readme está bom e faça o commit final em seu repositório;
-3. Envie e aguarde as instruções para seguir. Sucesso e boa sorte. =)
-
-## Suporte
-
-Use a [nossa comunidade](https://discord.gg/rdXbEvjsWu) para tirar dúvidas sobre o processo ou envie uma mensagem diretamente a um especialista no chat da plataforma. 
+Estou usando GitHub Secrets para gerenciar credenciais e algumas variaveis.
