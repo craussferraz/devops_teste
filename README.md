@@ -36,4 +36,5 @@ Obs.: se faz necessario ajustar o arquivo hosts com o IP do servidor manualmente
 
 ## Segurança
 
-Estou usando GitHub Secrets para gerenciar credenciais e algumas variaveis.
+Estou usando *GitHub Secrets* para gerenciar credenciais e algumas variaveis.
+- **/.gitignore**: No gitignore estão listado diversas extensões de arquivos possivelmente senciveis que não devem esta contidos no repositorio. 
